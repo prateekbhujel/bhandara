@@ -19,7 +19,7 @@
                     <div class="card-header">
                         <h4>Full Width</h4>
                         <div class="card-header-action">
-                            <a href="#" class="btn btn-dark">Create New<a/>
+                            <a href="{{ route('admin.slider.create') }}" class="btn btn-dark">Create New<a/>
                         </div>
                     </div>
                     <div class="card-body p-0">
