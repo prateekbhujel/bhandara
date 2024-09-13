@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Frontend;
+namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use File;
 use Illuminate\View\View;
 
-class UserProfileController extends Controller
+class VendorProfileController extends Controller
 {
     /** Just serve the view for the user nothing else. **/
     public function index(): View

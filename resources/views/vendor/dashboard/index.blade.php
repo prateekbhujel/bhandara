@@ -1,13 +1,13 @@
-@extends('frontend.dashboard.layouts.master')
+@extends('vendor.dashboard.layouts.master')
 
 @section('title')
-{{ $settings->site_name ?? config('app.name') }} || Dahsboard
+{{ config('app.name') }} || Dahsboard
 @endsection
 
 @section('content')
 <section id="wsus__dashboard">
     <div class="container-fluid">
-      @include('frontend.dashboard.layouts.sidebar')
+      @include('vendor.dashboard.layouts.sidebar')
       <div class="row">
         <div class="col-xl-9 col-xxl-10 col-lg-9 ms-auto">
             <h3>Vendor Dashboard</h3>
