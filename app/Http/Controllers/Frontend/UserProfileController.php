@@ -1,31 +1,30 @@
 <?php
 
-namespace App\Http\Controllers\Backend;
+namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\View\View;
 use File;
 
-class ProfileController extends Controller
+class UserProfileController extends Controller
 {
-    /** Just render the view for the user nothing else. **/
-    public function index(): View
+    /** Just serve the view for the user nothing else. **/
+    public function index()
     {
-        return view('admin.profile.index');
+        return view('frontend.dashboard.profile');
     }//End Method
-
-    /** Updates the Profile data with image and validation. **/
-    public function updateProfile(Request $request)
+    
+    /** Updates the User basic Informaton with validation. **/
+    public function update(Request $request)
     {
+        $user = Auth::user();
+
         $request->validate([
             'name' => ['required', 'max:100'],
-            'email' => ['required', 'email', 'unique:users,email,'.Auth::user()->id],
-            'image' => ['image', 'max:2048', ''],
+            'email' => ['required', 'email', 'unique:users,email,' . $user->id],
+            'image' => ['image', 'max:2048']
         ]);
-
-        $user = Auth::user();
         
         if($request->hasFile('image')) {
             
@@ -49,9 +48,9 @@ class ProfileController extends Controller
         toastr()->success('Profile Updated sucessfully');
         return redirect()->back();
     }//End Method
-
-    /** Update Password **/
-    public function updatePassword(Request $request) 
+    
+    /** Updates the Password of the user, with proper validation. **/
+    public function updatePassword(Request $request)
     {
         $request->validate([
             'current_password' => ['required', 'current_password'],
@@ -63,5 +62,5 @@ class ProfileController extends Controller
         ]);
         toastr()->success('Password Updated sucessfully');
         return redirect()->back();
-    }//End Method
+    }
 }

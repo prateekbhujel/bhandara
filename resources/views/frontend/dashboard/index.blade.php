@@ -1,7 +1,7 @@
 @extends('frontend.dashboard.layouts.master')
 
 @section('title')
-{{ $settings->site_name ?? config('app.name') }} || Dahsboard
+{{ config('app.name') }} || Dahsboard
 @endsection
 
 @section('content')
