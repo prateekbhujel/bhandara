@@ -7,5 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class slider extends Model
 {
-    use HasFactory;
+    use HasFactory;            
+    
+    protected $guarded = ['id'];
+
+    
 }
