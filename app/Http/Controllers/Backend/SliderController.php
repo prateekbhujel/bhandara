@@ -45,12 +45,12 @@ class SliderController extends Controller
         ]);
 
         /** Handling the Image Upload. **/
-        $banner = $this->uploadImage($request, 'banner', 'uploads/sliderImage');
-        $validated['banner'] = $banner;
+        $sliderImage = $this->uploadImage($request, 'banner', 'uploads/sliderImage');
+        $validated['banner'] = $sliderImage;
 
         Slider::create($validated);
 
-        toastr('Succefully created an Slider', 'success');
+        toastr('Data Created.', 'success');
         return redirect()->back();
     } //End Method
 
@@ -67,7 +67,24 @@ class SliderController extends Controller
      */
     public function update(Request $request, Slider $slider)
     {
-        //
+        $validated = $request->validate([
+            'banner'            => ['nullable', 'image', 'max:2048'],
+            'type'              => ['string', 'max:200'],
+            'title'             => ['required', 'max:200'],
+            'starting_price'    => ['max:200'],
+            'btn_url'           => ['url'],
+            'serial'            => ['required', 'integer'],
+            'status'            => ['required', 'in:1,0'],
+        ]);
+
+        /** Handling the Image Upload. **/
+        $sliderImage = $this->updateImage($request, 'banner', 'uploads/sliderImage', $slider->banner);
+        $validated['banner'] = empty(!$sliderImage) ? $sliderImage : $slider->banner;
+
+        $slider->update($validated);
+
+        toastr('Data Updated.', 'success');
+        return redirect()->route('admin.slider.index');
     } //End Method
 
     /**
@@ -75,6 +92,9 @@ class SliderController extends Controller
      */
     public function destroy(Slider $slider)
     {
-        //
+        $this->deleteImage($slider->banner);
+        $slider->delete();
+
+        return response(['status' => 'success', 'message' => 'Ddata delete Successfully.']);
     } //End Method
 }

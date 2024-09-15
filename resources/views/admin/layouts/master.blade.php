@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+
   <title>@yield('title', 'Dashboard') | {{ config('app.name') }}</title>
   <!-- Favicon  -->
   {{-- <link rel="shortcut icon" type="image/ico" href="{{ asset('public'. $generalSetting->favicon) }}" /> --}}
@@ -17,8 +19,8 @@
   <link rel="stylesheet" href="{{ asset('backend/assets/modules/weather-icon/css/weather-icons-wind.min.css') }}">
   <link rel="stylesheet" href="{{ asset('backend/assets/modules/summernote/summernote-bs4.css') }}">
   <link rel="stylesheet" href="{{ asset('tostr/toastr.min.css') }}">
-  <link rel="stylesheet" href="{{ asset('datatables/dataTables.dataTables.min.css') }}">
-  <link rel="stylesheet" href="{{ asset('datatables/bootstrap.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('datatables/jquery.dataTables.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('datatables/dataTables.bootstrap5.min.css') }}">
 
   <!-- Template CSS -->
   <link rel="stylesheet" href="{{ asset('backend/assets/css/style.css') }}">
@@ -73,8 +75,11 @@
   <script src="{{ asset('backend/assets/modules/summernote/summernote-bs4.js') }}"></script>
   <script src="{{ asset('backend/assets/modules/chocolat/dist/js/jquery.chocolat.min.js') }}"></script>
   <script src="{{ asset('tostr/toastr.min.js') }}"></script>
-  <script src="{{ asset('datatables/dataTables.min.js') }}"></script>
-  <script src="{{ asset('datatables/dataTables.bootstrap5.js') }}"></script>
+  <script src="{{ asset('datatables/jquery.dataTables.min.js') }}"></script>
+  <script src="{{ asset('datatables/dataTables.bootstrap5.min.js') }}"></script>
+  <script src="{{ asset('backend/assets/js/sweetalert2@11.js') }}"></script>
+ 
+
 
   <!-- Page Specific JS File -->
   <script src="{{ asset('backend/assets/js/page/index-0.js') }}"></script>
@@ -91,6 +96,67 @@
       @endforeach
     @endif
   </script>
+
+  {{-- Dynamic Delete with SweetAlert --}}
+  <Script>
+    $(document).ready(function() {
+
+      $.ajaxSetup({
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+      });
+
+        $('body').on('click', '.delete-item', function(e) {
+          e.preventDefault();
+          let deleteUrl = $(this).attr('href');
+
+          Swal.fire({
+                      title: "Are you sure?",
+                      text: "You won't be able to revert this!",
+                      icon: "warning",
+                      showCancelButton: true,
+                      confirmButtonColor: "#3085d6",
+                      cancelButtonColor: "#d33",
+                      confirmButtonText: "Yes, delete it!"
+                    }).then((result) => {
+                      if (result.isConfirmed) {
+                        $.ajax({
+                          type: 'DELETE',
+                          url: deleteUrl,
+
+                          success: function(data){
+                             if(data.status === 'success') {
+                                Swal.fire(
+                                  data.message,
+                                  'Deleted!',
+                                );
+                               window.location.reload(); 
+                             }else if (data.status == 'error'){
+                                Swal.fire(
+                                  data.message,
+                                  'Cannot Delete!',
+                                );
+                               window.location.reload();
+                             }
+
+                          },
+                          error: function(xhr, status, error) {
+                            console.log(error);
+                          }
+                        });
+                        Swal.fire({
+                          title: "Deleted!",
+                          text: "Your file has been deleted.",
+                          icon: "success"
+                        });
+                      }
+                    });
+        });
+    });
+  </script>
+  {{--  End Dynamic SweetAlert--}}
+
 @stack('scripts')
 </body>
 </html>

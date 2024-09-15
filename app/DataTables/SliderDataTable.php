@@ -22,7 +22,22 @@ class SliderDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', 'slider.action')
+            ->addColumn('action', function($query) {
+                $editBtn = "<a href='". route('admin.slider.edit', $query->id) ."' class='btn btn-primary btn-sm'><i class='fa fa-edit'></i></a>";
+                $deletBtn = "<a href='". route('admin.slider.destroy', $query->id) ."' class='btn btn-danger btn-sm ml-1 delete-item'><i class='fa fa-trash'></i></a>";
+               
+               return $editBtn . $deletBtn;
+            })
+            ->addColumn('banner', function($query) {
+                return "<img width='350px' src='". asset($query->banner) ."' />";
+            })
+            ->addColumn('status', function($query) {
+                $statusClass = $query->status == 1 ? 'badge-success text-dark' : 'badge-danger';
+                $statusText = $query->status == 1 ? 'Active' : 'InActive';
+            
+                return '<span class="badge ' . $statusClass . '">' . $statusText . '</span>';
+            })            
+            ->rawColumns(['banner', 'action', 'status'])
             ->setRowId('id');
     }
 
@@ -43,7 +58,7 @@ class SliderDataTable extends DataTable
                     ->setTableId('slider-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
-                    //->dom('Bfrtip')
+                    // ->dom('Bfrtip')
                     ->orderBy(1)
                     ->selectStyleSingle()
                     ->buttons([
@@ -62,17 +77,18 @@ class SliderDataTable extends DataTable
     public function getColumns(): array
     {
         return [
+            Column::make('serial')->title('Serial No.')->addClass('text-left')->width(60),
+            Column::make('banner')->title('Banner')->width(150), // Adjusted width for images
+            Column::make('title')->title('Title')->addClass('text-truncate')->width(200), // Adjusted width for titles
+            Column::make('status')->title('Status')->addClass('text-center')->width(100),
             Column::computed('action')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width(60)
-                  ->addClass('text-center'),
-            Column::make('id'),
-            // Column::make('add your columns'),
-            Column::make('created_at'),
-            Column::make('updated_at'),
+                ->exportable(false)
+                ->printable(false)
+                ->width(100)
+                ->addClass('text-center'),
         ];
     }
+    
 
     /**
      * Get the filename for export.
