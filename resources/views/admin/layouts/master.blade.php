@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
   <title>@yield('title', 'Dashboard') | {{ config('app.name') }}</title>
-
   <!-- Favicon  -->
   {{-- <link rel="shortcut icon" type="image/ico" href="{{ asset('public'. $generalSetting->favicon) }}" /> --}}
 
@@ -18,6 +17,8 @@
   <link rel="stylesheet" href="{{ asset('backend/assets/modules/weather-icon/css/weather-icons-wind.min.css') }}">
   <link rel="stylesheet" href="{{ asset('backend/assets/modules/summernote/summernote-bs4.css') }}">
   <link rel="stylesheet" href="{{ asset('tostr/toastr.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('datatables/dataTables.dataTables.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('datatables/bootstrap.min.css') }}">
 
   <!-- Template CSS -->
   <link rel="stylesheet" href="{{ asset('backend/assets/css/style.css') }}">
@@ -72,6 +73,8 @@
   <script src="{{ asset('backend/assets/modules/summernote/summernote-bs4.js') }}"></script>
   <script src="{{ asset('backend/assets/modules/chocolat/dist/js/jquery.chocolat.min.js') }}"></script>
   <script src="{{ asset('tostr/toastr.min.js') }}"></script>
+  <script src="{{ asset('datatables/dataTables.min.js') }}"></script>
+  <script src="{{ asset('datatables/dataTables.bootstrap5.js') }}"></script>
 
   <!-- Page Specific JS File -->
   <script src="{{ asset('backend/assets/js/page/index-0.js') }}"></script>
@@ -79,7 +82,7 @@
   <!-- Template JS File -->
   <script src="{{ asset('backend/assets/js/scripts.js') }}"></script>
   <script src="{{ asset('backend/assets/js/custom.js') }}"></script>
-  
+
   <!-- Toaster Alter -->
   <script>
     @if ($errors->any()) 
@@ -88,6 +91,6 @@
       @endforeach
     @endif
   </script>
-
+@stack('scripts')
 </body>
 </html>

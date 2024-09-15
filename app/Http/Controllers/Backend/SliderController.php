@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\DataTables\SliderDataTable;
 use App\Http\Controllers\Controller;
-use App\Models\slider;
+use App\Models\Slider;
 use App\Traits\ImageUploadTrait;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -13,12 +14,12 @@ class SliderController extends Controller
     use ImageUploadTrait;
 
     /**
-     * Display the all Slider in Table from storage.
+     * Display the all Slider in Table from storage using Yajra databale to render an view.
      */
-    public function index(): View
+    public function index(SliderDataTable $dataTable): mixed
     {
-        return view('admin.slider.index');
-    }//End Method
+        return $dataTable->render('admin.slider.index');
+    } //End Method
 
     /**
      * Show the form for creating a new Slider.
@@ -26,7 +27,7 @@ class SliderController extends Controller
     public function create(): View
     {
         return view('admin.slider.create');
-    }//End Method
+    } //End Method
 
     /**
      * Store a newly created slider in after the validation storage.
@@ -34,14 +35,14 @@ class SliderController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-                        'banner'            => ['required', 'image', 'max:2048'],
-                        'type'              => ['string', 'max:200'],
-                        'title'             => ['required', 'max:200'],
-                        'starting_price'    => ['max:200'],
-                        'btn_url'           => ['url'],
-                        'serial'            => ['required', 'integer'],
-                        'status'            => ['required', 'in:1,0'],
-                    ]);
+            'banner'            => ['required', 'image', 'max:2048'],
+            'type'              => ['string', 'max:200'],
+            'title'             => ['required', 'max:200'],
+            'starting_price'    => ['max:200'],
+            'btn_url'           => ['url'],
+            'serial'            => ['required', 'integer'],
+            'status'            => ['required', 'in:1,0'],
+        ]);
 
         /** Handling the Image Upload. **/
         $banner = $this->uploadImage($request, 'banner', 'uploads/sliderImage');
@@ -51,15 +52,15 @@ class SliderController extends Controller
 
         toastr('Succefully created an Slider', 'success');
         return redirect()->back();
-    }//End Method
+    } //End Method
 
     /**
      * Show the form for editing the slider.
      */
-    public function edit(slider $slider)
+    public function edit(Slider $slider): View
     {
-        //
-    }//End Method
+        return view('admin.slider.edit', compact('slider'));
+    } //End Method
 
     /**
      * Update the specified Slider in storage.
@@ -67,7 +68,7 @@ class SliderController extends Controller
     public function update(Request $request, Slider $slider)
     {
         //
-    }//End Method
+    } //End Method
 
     /**
      * Remove the specified slider from storage.
@@ -75,5 +76,5 @@ class SliderController extends Controller
     public function destroy(Slider $slider)
     {
         //
-    }//End Method
+    } //End Method
 }
