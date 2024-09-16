@@ -5,24 +5,24 @@
 @section('content')
 <section class="section">
     <div class="section-header">
-        <h1>Create New Slider</h1>
+        <h1>Create New Category</h1>
         <div class="section-header-breadcrumb">
             <div class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></div>
-            <div class="breadcrumb-item"><a href="{{ route('admin.category.index') }}">Slider</a></div>
-            <div class="breadcrumb-item">Create Slider</div>
+            <div class="breadcrumb-item"><a href="{{ route('admin.category.index') }}">Category</a></div>
+            <div class="breadcrumb-item"> Create Category</div>
         </div>
         
     </div>
     <div class="section-body">
-        <a href="{{ route('admin.slider.index') }}" class="btn btn-primary mb-2"><i class="fas fa-backward"></i> Go Back</a><br />
+        <a href="{{ route('admin.category.index') }}" class="btn btn-primary mb-2"><i class="fas fa-backward"></i> Go Back</a><br />
         <div class="row">
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4>create new slider</h4>
+                        <h4>create new category</h4>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('admin.slider.store') }}" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('admin.category.store') }}">
                             @csrf
 
                             <div class="form-group">

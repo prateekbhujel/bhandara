@@ -5,10 +5,10 @@
 @section('content')
 <section class="section">
     <div class="section-header">
-        <h1>Slider</h1>
+        <h1>Category</h1>
         <div class="section-header-breadcrumb">
             <div class="breadcrumb-item"><a href="{{ route('admin.slider.index') }}">Dashboard</a></div>
-            <div class="breadcrumb-item">Slider</div>
+            <div class="breadcrumb-item">Category</div>
         </div>
         
     </div>
@@ -17,9 +17,9 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Slider Data</h4>
+                        <h4>Category Data</h4>
                         <div class="card-header-action">
-                            <a href="{{ route('admin.slider.create') }}" class="btn btn-dark">Create New Slider<a/>
+                            <a href="{{ route('admin.category.create') }}" class="btn btn-dark">Create New Category<a/>
                         </div>
                     </div>
                     <div class="card-body p-2">

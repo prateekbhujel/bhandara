@@ -11,7 +11,7 @@ class HomeController extends Controller
     public function index()
     {
         $sliders = Slider::where('status', 1)
-                            ->orderBy('serial', 'asc')
+                            ->orderBy('serial', 'ASC')
                             ->get();
         return view('frontend.home.index', compact('sliders'));
     }//End Method

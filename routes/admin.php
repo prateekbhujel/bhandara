@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Backend\AdminController;
+use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ProfileController;
 use App\Http\Controllers\Backend\SliderController;
 use Illuminate\Support\Facades\Route;
@@ -12,5 +13,8 @@ Route::get('profile', [ProfileController::class, 'index'])->name('profile');
 Route::post('profile/update', [ProfileController::class, 'updateProfile'])->name('profile.update');
 Route::post('password/update', [ProfileController::class, 'updatePassword'])->name('password.update');
 
-/** Slider Routes **/
+/** Slider Rresource Routes **/
 Route::resource('slider', SliderController::class)->except('show');
+
+/** Category Rresource Routes **/
+Route::resource('category', CategoryController::class)->except('show');
