@@ -51,7 +51,7 @@ class SliderController extends Controller
         Slider::create($validated);
 
         toastr('Data Created.', 'success');
-        return redirect()->back();
+        return redirect()->route('admin.slider.index');
     } //End Method
 
     /**
@@ -95,6 +95,6 @@ class SliderController extends Controller
         $this->deleteImage($slider->banner);
         $slider->delete();
 
-        return response(['status' => 'success', 'message' => 'Ddata delete Successfully.']);
+        return response(['status' => 'success', 'message' => 'Data delete successfully.']);
     } //End Method
 }

@@ -40,7 +40,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="title">title
+                                <label for="title">Title
                                     <span class="text-danger">*</span>
                                 </label>
                                 <input type="text" name="title" value="{{ old('title') }}" class="form-control" id="title" placeholder="Title of Product" />
