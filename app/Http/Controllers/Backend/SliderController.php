@@ -50,7 +50,7 @@ class SliderController extends Controller
 
         Slider::create($validated);
 
-        toastr('Data Created.', 'success');
+        toastr('Data Created Successfully!', 'success');
         return redirect()->route('admin.slider.index');
     } //End Method
 
@@ -83,7 +83,7 @@ class SliderController extends Controller
 
         $slider->update($validated);
 
-        toastr('Data Updated.', 'success');
+        toastr('Data Updated Successfully!', 'success');
         return redirect()->route('admin.slider.index');
     } //End Method
 
@@ -95,6 +95,6 @@ class SliderController extends Controller
         $this->deleteImage($slider->banner);
         $slider->delete();
 
-        return response(['status' => 'success', 'message' => 'Data delete successfully.']);
+        return response(['status' => 'success', 'message' => 'Data Delete Successfully!']);
     } //End Method
 }

@@ -9,7 +9,7 @@
         <div class="section-header-breadcrumb">
             <div class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></div>
             <div class="breadcrumb-item"><a href="{{ route('admin.category.index') }}">Category</a></div>
-            <div class="breadcrumb-item"> Edit Category</div>
+            <div class="breadcrumb-item">Edit Category</div>
         </div>
         
     </div>
@@ -19,60 +19,26 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Edit Slider</h4>
+                        <h4>edit category</h4>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('admin.category.update', $category->id) }}" enctype="multipart/form-data">
-                            @csrf
+                        <form method="POST" action="{{ route('admin.category.update', $category->id) }}">
                             @method('PUT')
-
+                            @csrf
                             <div class="form-group">
-                                <label>Current Slider</label>
-                                <br>
-                                <img width="450px;" src="{{ asset($slider->banner) }}" alt="slider-image" />
-                            </div>
-                            
-
-                            <div class="form-group">
-                                <label for="banner">Slider Image
+                                <label for="icon">Icon
                                     <span class="text-danger">*</span>
                                 </label>
-                                <input type="file" name="banner" class="form-control" id="banner" />
+                                <div>
+                                    <button name="icon" data-icon="{{ old('icon', $category->icon) }}" class="btn btn-primary btn-xl" data-selected-class="btn-primary" data-unselected-class="btn-muted" role="iconpicker"></button>
+                                </div>
                             </div>
 
                             <div class="form-group">
-                                <label for="type">Type
+                                <label for="name">Name
                                     <span class="text-danger">*</span>
                                 </label>
-                                <input type="text" name="type" value="{{ old('type', $slider->type) }}" class="form-control" id="type" placeholder="Type of the Product." />
-                            </div>
-
-                            <div class="form-group">
-                                <label for="title">Title
-                                    <span class="text-danger">*</span>
-                                </label>
-                                <input type="text" name="title" value="{{ old('title', $slider->title) }}" class="form-control" id="title" placeholder="Title of Product" />
-                            </div>
-
-                            <div class="form-group">
-                                <label for="starting_price">Starting Price
-                                    <span class="text-danger">*</span>
-                                </label>
-                                <input type="text" name="starting_price" value="{{ old('starting_price', $slider->starting_price) }}" class="form-control" id="starting_price" placeholder="178" />
-                            </div>
-
-                            <div class="form-group">
-                                <label for="btn_url">Button Url
-                                    <span class="text-danger">*</span>
-                                </label>
-                                <input type="text" name="btn_url" value="{{ old('btn_url', $slider->btn_url) }}" class="form-control" id="btn_url" placeholder="https:://example.com" />
-                            </div>
-
-                            <div class="form-group">
-                                <label for="serial">Serial
-                                    <span class="text-danger">*</span>
-                                </label>
-                                <input type="text" name="serial" value="{{ old('serial', $slider->serial) }}" class="form-control" id="serial" placeholder="SN no. example: 1 or 2 or 3." />
+                                <input type="text" name="name" value="{{ old('name', $category->name) }}" class="form-control" id="name" placeholder="Name of the Category." />
                             </div>
 
                             <div class="form-group">
@@ -80,10 +46,11 @@
                                     <span class="text-danger">*</span>
                                 </label>
                                 <select name="status" class="form-control" id="status">
-                                    <option value="1" {{ old('status', $slider->status) == '1' ? "selected" : "" }}> Active </option>
-                                    <option value="0" {{ old('status',  $slider->status) == '0' ? "selected" : "" }}> Inactive </option>
+                                    <option value="1" {{ old('status', $category->status) == '1' ? "selected" : "" }}> Active </option>
+                                    <option value="0" {{ old('status', $category->status) == '0' ? "selected" : "" }}> Inactive </option>
                                 </select>
                             </div>
+
                             <button type="submit" class="btn btn-dark">Update</button>
                         </form>
                     </div>

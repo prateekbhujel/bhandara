@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 
-@section('title')Slider @endsection
+@section('title')Category @endsection
 
 @section('content')
 <section class="section">
@@ -34,4 +34,37 @@
 @endsection
 @push('scripts')
     {{ $dataTable->scripts(attributes: ['type' => 'module']) }}
+
+    <script>
+        $(document).ready(function() {
+            $('body').on('click', '.change-status', function() {
+                let isChecked = $(this).is(':checked');
+                let id = $(this).data('id');
+                let checkbox = $(this); // Keep a reference to the checkbox
+
+                $.ajax({
+                    url: "{{ route('admin.category.change-status') }}",
+                    method: 'PUT', // Ensure this matches your route definition
+                    data: {
+                        status: isChecked,
+                        id: id
+                    },
+                    success: function(data) {
+                        toastr.success(data.message);
+
+                        // Update the status text and badge class
+                        let statusLabel = checkbox.closest('.custom-switch').find('.badge');
+                        statusLabel.text(data.statusText);
+                        statusLabel.removeClass('badge-success badge-danger');
+                        statusLabel.addClass(data.statusClass);
+                    },
+                    error: function(xhr, status, error) {
+                        console.log(error);
+                        toastr.error('An error occurred while updating the status.');
+                    }
+                });
+            });
+        });
+
+    </script>
 @endpush

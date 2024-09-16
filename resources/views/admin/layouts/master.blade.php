@@ -21,6 +21,7 @@
   <link rel="stylesheet" href="{{ asset('tostr/toastr.min.css') }}">
   <link rel="stylesheet" href="{{ asset('datatables/jquery.dataTables.min.css') }}">
   <link rel="stylesheet" href="{{ asset('datatables/dataTables.bootstrap5.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('backend/assets/css/bootstrap-iconpicker.min.css') }}">
 
   <!-- Template CSS -->
   <link rel="stylesheet" href="{{ asset('backend/assets/css/style.css') }}">
@@ -78,8 +79,8 @@
   <script src="{{ asset('datatables/jquery.dataTables.min.js') }}"></script>
   <script src="{{ asset('datatables/dataTables.bootstrap5.min.js') }}"></script>
   <script src="{{ asset('backend/assets/js/sweetalert2@11.js') }}"></script>
+  <script src="{{ asset('backend/assets/js/bootstrap-iconpicker.bundle.min.js') }}"></script>
  
-
 
   <!-- Page Specific JS File -->
   <script src="{{ asset('backend/assets/js/page/index-0.js') }}"></script>
@@ -99,61 +100,54 @@
 
   {{-- Dynamic Delete with SweetAlert --}}
   <Script>
-    $(document).ready(function() {
-
+   $(document).ready(function() 
+    {
       $.ajaxSetup({
         headers: {
           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
       });
 
-        $('body').on('click', '.delete-item', function(e) {
-          e.preventDefault();
-          let deleteUrl = $(this).attr('href');
+      $('body').on('click', '.delete-item', function(e) {
+        e.preventDefault();
+        let deleteUrl = $(this).attr('href');
 
-          Swal.fire({
-                      title: "Are you sure?",
-                      text: "You won't be able to revert this!",
-                      icon: "warning",
-                      showCancelButton: true,
-                      confirmButtonColor: "#3085d6",
-                      cancelButtonColor: "#d33",
-                      confirmButtonText: "Yes, delete it!"
-                    }).then((result) => {
-                      if (result.isConfirmed) {
-                        $.ajax({
-                          type: 'DELETE',
-                          url: deleteUrl,
+        Swal.fire({
+          title: "Are you sure?",
+          text: "You won't be able to revert this!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+          if (result.isConfirmed) {
+            $.ajax({
+              type: 'DELETE',
+              url: deleteUrl,
 
-                          success: function(data){
-                             if(data.status === 'success') {
-                                Swal.fire(
-                                  data.message,
-                                  'Deleted!',
-                                );
-                               window.location.reload(); 
-                             }else if (data.status == 'error'){
-                                Swal.fire(
-                                  data.message,
-                                  'Cannot Delete!',
-                                );
-                               window.location.reload();
-                             }
-
-                          },
-                          error: function(xhr, status, error) {
-                            console.log(error);
-                          }
-                        });
-                        Swal.fire({
-                          title: "Deleted!",
-                          text: "Your file has been deleted.",
-                          icon: "success"
-                        });
-                      }
-                    });
+              success: function(data) {
+                if (data.status === 'success') {
+                  // Show toastr message for success
+                  toastr.success(data.message);
+                  // Reload the page after toastr notification
+                  setTimeout(function() {
+                    window.location.reload();
+                  }, 680); // Adjust delay if needed
+                } else if (data.status === 'error') {
+                  // Show toastr message for error
+                  toastr.error(data.message);
+                }
+              },
+              error: function(xhr, status, error) {
+                console.log(error);
+              }
+            });
+          }
         });
-    });
+      });
+    }); 
+
   </script>
   {{--  End Dynamic SweetAlert--}}
 

@@ -16,5 +16,8 @@ Route::post('password/update', [ProfileController::class, 'updatePassword'])->na
 /** Slider Rresource Routes **/
 Route::resource('slider', SliderController::class)->except('show');
 
-/** Category Rresource Routes **/
+/** Category Routes *
+ * Alwyas registerd the route right before the category resource route.
+*/
+Route::put('change-status', [CategoryController::class, 'changeStatus'])->name('category.change-status');
 Route::resource('category', CategoryController::class)->except('show');
