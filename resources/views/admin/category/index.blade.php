@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 
-@section('title')Category @endsection
+@section('title')Product Category @endsection
 
 @section('content')
 <section class="section">
@@ -8,7 +8,7 @@
         <h1>Category</h1>
         <div class="section-header-breadcrumb">
             <div class="breadcrumb-item"><a href="{{ route('admin.slider.index') }}">Dashboard</a></div>
-            <div class="breadcrumb-item">Category</div>
+            <div class="breadcrumb-item">Product Category</div>
         </div>
         
     </div>

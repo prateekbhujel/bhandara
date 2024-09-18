@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 
-@section('title')Sub-Category Create @endsection
+@section('title') Product Sub Category @endsection
 
 @section('content')
 <section class="section">
@@ -8,8 +8,9 @@
         <h1>Edit Sub-Category</h1>
         <div class="section-header-breadcrumb">
             <div class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></div>
-            <div class="breadcrumb-item"><a href="{{ route('admin.category.index') }}">Sub-Category</a></div>
-            <div class="breadcrumb-item">Edit Sub-Category</div>
+            <div class="breadcrumb-item"><a href="{{ route('admin.sub-category.index') }}">Product Sub Category</a></div>
+            <div class="breadcrumb-item">Edit Product Sub Category
+            </div>
         </div>
         
     </div>
@@ -19,26 +20,32 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4>edit sub-category</h4>
+                        <h4>edit product sub category</h4>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('admin.sub-category.update', $category->id) }}">
+                        <form method="POST" action="{{ route('admin.sub-category.update', $subCategory->id) }}">
                             @method('PUT')
                             @csrf
+                            
                             <div class="form-group">
-                                <label for="icon">Icon
+                                <label for="category_id">Category
                                     <span class="text-danger">*</span>
                                 </label>
-                                <div>
-                                    <button name="icon" data-icon="{{ old('icon', $category->icon) }}" class="btn btn-primary btn-xl" data-selected-class="btn-primary" data-unselected-class="btn-muted" role="iconpicker"></button>
-                                </div>
+                                <select name="category_id" class="form-control" id="category_id">
+                                    <option> --- Select Category --- </option>
+                                    @foreach ($categories as $category)
+                                        <option value="{{ $category->id }}" {{ old('category_id', $subCategory->category_id) == $category->id ? 'selected' : '' }}>
+                                            {{ $category->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
                             </div>
 
                             <div class="form-group">
-                                <label for="name">Name
+                                <label for="name">Sub Category Name
                                     <span class="text-danger">*</span>
                                 </label>
-                                <input type="text" name="name" value="{{ old('name', $category->name) }}" class="form-control" id="name" placeholder="Name of the Sub-Category." />
+                                <input type="text" name="name" value="{{ old('name', $subCategory->name) }}" class="form-control" id="name" placeholder="camera, Suzuki, T-Shirt" />
                             </div>
 
                             <div class="form-group">
@@ -46,8 +53,8 @@
                                     <span class="text-danger">*</span>
                                 </label>
                                 <select name="status" class="form-control" id="status">
-                                    <option value="1" {{ old('status', $category->status) == '1' ? "selected" : "" }}> Active </option>
-                                    <option value="0" {{ old('status', $category->status) == '0' ? "selected" : "" }}> Inactive </option>
+                                    <option value="1" {{ old('status', $subCategory->status) == '1' ? "selected" : "" }}> Active </option>
+                                    <option value="0" {{ old('status', $subCategory->status) == '0' ? "selected" : "" }}> Inactive </option>
                                 </select>
                             </div>
 

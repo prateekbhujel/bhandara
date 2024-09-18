@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 
-@section('title')Category-Create @endsection
+@section('title')Product Category @endsection
 
 @section('content')
 <section class="section">

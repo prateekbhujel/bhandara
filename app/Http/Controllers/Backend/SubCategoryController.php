@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Backend;
 
 use App\DataTables\SubCategoryDataTable;
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Str;
 
 class SubCategoryController extends Controller
 {
@@ -23,7 +25,8 @@ class SubCategoryController extends Controller
      */
     public function create(): View
     {
-        return view('admin.sub-category.create');
+        $categories = Category::where('status', 1)->get();
+        return view('admin.sub-category.create', compact('categories'));
     }//End Method
 
     /**
@@ -31,7 +34,16 @@ class SubCategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+       $valiatedData = $request->validate([
+                        'category_id' => 'required',
+                        'name'        => 'required|max:200|unique:sub_categories,name',
+                        'status'      => 'required' 
+                    ]);
+        $valiatedData['slug'] = Str::slug($request->name);
+        SubCategory::create($valiatedData);
+        
+        toastr('Data Created Successfully!', 'success');
+        return redirect()->route('admin.sub-category.index');
     }//End Method
 
     /**
@@ -39,7 +51,8 @@ class SubCategoryController extends Controller
      */
     public function edit(SubCategory $subCategory): View
     {
-        return view('admin.sub-category.edit', compact('subCategory'));
+        $categories = Category::where('status', 1)->get();
+        return view('admin.sub-category.edit', compact('subCategory', 'categories'));
     }//End Method
 
     /**
@@ -47,7 +60,55 @@ class SubCategoryController extends Controller
      */
     public function update(Request $request,SubCategory $subCategory)
     {
-        //
+        $valiatedData = $request->validate([
+            'category_id' => 'required',
+            'name'        => 'required|max:200|unique:sub_categories,name,' . $subCategory->id,
+            'status'      => 'required' 
+        ]);
+        $valiatedData['slug'] = Str::slug($request->name);
+        $subCategory->update($valiatedData);
+
+        toastr('Data Updated Successfully!', 'success');
+        return redirect()->route('admin.sub-category.index');
+    }//End Method
+
+    /**
+     * Change the status of the Sub category from table view or index view custom method.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function changeStatus(Request $request)
+    {
+        // Find the category by its ID
+        $category = SubCategory::find($request->id);
+
+        // Return error if category not found
+        if (!$category) {
+            return response(['status' => 'error', 'message' => 'Sub Category not found.'], 404);
+        }
+
+        // Ensure the status is either 0 or 1
+        if ($request->has('status')) {
+            // Convert 'true' or 'false' to 1 or 0
+            $status = $request->status == 'true' ? 1 : 0;
+            $category->update(['status' => $status]);
+
+            // Determine status text and class based on the new status
+            $statusText = $status ? 'Active' : 'Inactive';
+            $statusClass = $status ? 'badge-success' : 'badge-danger';
+
+            // Return success response with updated status information
+            return response([
+                'status' => 'success',
+                'message' => 'Status updated successfully',
+                'statusText' => $statusText,
+                'statusClass' => $statusClass
+            ]);
+        }
+
+        // Return error response for invalid status value
+        return response()->json(['status' => 'error', 'message' => 'Invalid status value.'], 400);
     }//End Method
 
     /**
@@ -56,5 +117,7 @@ class SubCategoryController extends Controller
     public function destroy(SubCategory $subCategory)
     {
         $subCategory->delete();
+
+        return response(['status' => 'success', 'message' => 'Data Delete Successfully!']);
     }//End Method
 }

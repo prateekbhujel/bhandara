@@ -1,14 +1,14 @@
 @extends('admin.layouts.master')
 
-@section('title')Sub-Category @endsection
+@section('title') Product Sub Category @endsection
 
 @section('content')
 <section class="section">
     <div class="section-header">
-        <h1>Sub-Category</h1>
+        <h1> Product Sub Category</h1>
         <div class="section-header-breadcrumb">
             <div class="breadcrumb-item"><a href="{{ route('admin.slider.index') }}">Dashboard</a></div>
-            <div class="breadcrumb-item">Sub-Category</div>
+            <div class="breadcrumb-item">Product Sub Category</div>
         </div>
         
     </div>
@@ -17,9 +17,9 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Sub-Category Data</h4>
+                        <h4> Product Sub Category Data</h4>
                         <div class="card-header-action">
-                            <a href="{{ route('admin.sub-category.create') }}" class="btn btn-dark">Create New Sub-Category<a/>
+                            <a href="{{ route('admin.sub-category.create') }}" class="btn btn-dark">Add New Sub Category<a/>
                         </div>
                     </div>
                     <div class="card-body p-2">
@@ -43,7 +43,7 @@
                 let checkbox = $(this); // Keep a reference to the checkbox
 
                 $.ajax({
-                    url: "{{ route('admin.category.change-status') }}",
+                    url: "{{ route('admin.sub-category.change-status') }}",
                     method: 'PUT', // Ensure this matches your route definition
                     data: {
                         status: isChecked,

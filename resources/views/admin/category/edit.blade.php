@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 
-@section('title')Category-Edit @endsection
+@section('title')Product Category @endsection
 
 @section('content')
 <section class="section">
@@ -9,7 +9,7 @@
         <div class="section-header-breadcrumb">
             <div class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></div>
             <div class="breadcrumb-item"><a href="{{ route('admin.category.index') }}">Category</a></div>
-            <div class="breadcrumb-item">Edit Category</div>
+            <div class="breadcrumb-item">Edit Product Category</div>
         </div>
         
     </div>
