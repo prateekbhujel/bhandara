@@ -81,10 +81,10 @@ class SubCategoryController extends Controller
     public function changeStatus(Request $request)
     {
         // Find the category by its ID
-        $category = SubCategory::find($request->id);
+        $subCategory = SubCategory::find($request->id);
 
-        // Return error if category not found
-        if (!$category) {
+        // Return error if sub category not found
+        if (!$subCategory) {
             return response(['status' => 'error', 'message' => 'Sub Category not found.'], 404);
         }
 
@@ -92,7 +92,7 @@ class SubCategoryController extends Controller
         if ($request->has('status')) {
             // Convert 'true' or 'false' to 1 or 0
             $status = $request->status == 'true' ? 1 : 0;
-            $category->update(['status' => $status]);
+            $subCategory->update(['status' => $status]);
 
             // Determine status text and class based on the new status
             $statusText = $status ? 'Active' : 'Inactive';

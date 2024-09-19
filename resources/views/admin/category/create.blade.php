@@ -38,7 +38,7 @@
                                 <label for="name">Name
                                     <span class="text-danger">*</span>
                                 </label>
-                                <input type="text" name="name" value="{{ old('name') }}" class="form-control" id="name" placeholder="Name of the Category." />
+                                <input type="text" name="name" value="{{ old('name') }}" class="form-control" id="name" placeholder="Eg: Electronics, Men's Fashion, Women's Fashion." />
                             </div>
 
                             <div class="form-group">

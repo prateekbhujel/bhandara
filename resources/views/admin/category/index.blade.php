@@ -40,11 +40,11 @@
             $('body').on('click', '.change-status', function() {
                 let isChecked = $(this).is(':checked');
                 let id = $(this).data('id');
-                let checkbox = $(this); // Keep a reference to the checkbox
+                let checkbox = $(this);
 
                 $.ajax({
                     url: "{{ route('admin.category.change-status') }}",
-                    method: 'PUT', // Ensure this matches your route definition
+                    method: 'PUT',
                     data: {
                         status: isChecked,
                         id: id

@@ -1,0 +1,99 @@
+<?php
+
+namespace App\Http\Controllers\Backend;
+
+use App\DataTables\ChildCategoryDataTable;
+use App\Http\Controllers\Controller;
+use App\Models\ChildCategory;
+use Illuminate\Http\Request;
+
+class ChildCategoryController extends Controller
+{
+    /**
+     * Display a listing of the child category.
+     */
+    public function index(ChildCategoryDataTable $dataTable)
+    {
+        return $dataTable->render('admin.child-category.create');
+    }//End Method
+
+    /**
+     * Change the status of the Sub category from table view or index view custom method.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function changeStatus(Request $request)
+    {
+        // Find the category by its ID
+        $childCategory = ChildCategory::find($request->id);
+
+        // Return error if category not found
+        if (!$childCategory) {
+            return response(['status' => 'error', 'message' => 'Child Category not found.'], 404);
+        }
+
+        // Ensure the status is either 0 or 1
+        if ($request->has('status')) {
+            // Convert 'true' or 'false' to 1 or 0
+            $status = $request->status == 'true' ? 1 : 0;
+            $childCategory->update(['status' => $status]);
+
+            // Determine status text and class based on the new status
+            $statusText = $status ? 'Active' : 'Inactive';
+            $statusClass = $status ? 'badge-success' : 'badge-danger';
+
+            // Return success response with updated status information
+            return response([
+                'status' => 'success',
+                'message' => 'Status updated successfully',
+                'statusText' => $statusText,
+                'statusClass' => $statusClass
+            ]);
+        }
+
+        // Return error response for invalid status value
+        return response()->json(['status' => 'error', 'message' => 'Invalid status value.'], 400);
+    }//End Method
+    /**
+     * Show the form for creating a new child category.
+     */
+    public function create()
+    {
+        return view('admin.child-category.create');
+    }//End Method
+
+    /**
+     * Store a newly created child category in storage.
+     */
+    public function store(Request $request)
+    {
+        //
+    }//End Method
+
+    /**
+     * Show the form for editing the specified child category.
+     */
+    public function edit(ChildCategory $childCategory)
+    {
+        return view('admin.child-category.edit', compact('childCategory'));
+    }//End Method
+
+    /**
+     * Update the specified child category in storage.
+     */
+    public function update(Request $request, ChildCategory $childCategory)
+    {
+        //
+    }//End Method
+
+    /**
+     * Remove the specified child category from storage.
+     */
+    public function destroy(ChildCategory $childCategory)
+    {
+        $childCategory->delete();
+
+        return response(['status' => 'success', 'message' => 'Data Delete Successfully!']);
+    }//End Method
+}
