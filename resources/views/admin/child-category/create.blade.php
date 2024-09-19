@@ -29,11 +29,11 @@
                                 <label for="category_id">Category
                                     <span class="text-danger">*</span>
                                 </label>
-                                <select name="category_id" class="form-control" id="category_id">
+                                <select name="category_id" class="form-control main-category" id="category_id">
                                     <option> --- Select Category --- </option>
-                                    {{-- @foreach ($categories as $category)
+                                    @foreach ($categories as $category)
                                         <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? "selected" : "" }}>{{ $category->name }}</option>
-                                    @endforeach --}}
+                                    @endforeach
                                 </select>
                             </div>                            
                             
@@ -41,11 +41,8 @@
                                 <label for="">Sub Category
                                     <span class="text-danger">*</span>
                                 </label>
-                                <select name="" class="form-control" id="">
+                                <select name="" class="form-control sub-category" id="">
                                     <option> --- Select Sub Category --- </option>
-                                    {{-- @foreach ($categories as $category)
-                                        <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? "selected" : "" }}>{{ $category->name }}</option>
-                                    @endforeach --}}
                                 </select>
                             </div>
 
@@ -75,3 +72,31 @@
     </div>
 </section>
 @endsection
+
+@push('scripts')
+    <script>
+        $(document).ready( function () {
+            $('body').on('change', '.main-category', function () {
+               let id = $(this).val();
+               $.ajax({
+                    method: 'GET',
+                    url: "{{ route('admin.get-sub-categories') }}",
+                    data: {
+                        id: id
+                    },
+                    success: function (data) {
+                        console.log(data);
+                        $('.sub-category').html(`<option> --- Select Sub Category --- </option>`);
+                        
+                        $.each(data, function(i, item){
+                            $('.sub-category').append(`<option value="${item.id}">${item.name}</option>`);  
+                        })
+                    },
+                    error: function(xhr, status, error) {
+                        console.log(error);
+                    }
+               });
+            }); 
+        });
+    </script>
+@endpush

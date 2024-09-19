@@ -7,7 +7,7 @@
     <div class="section-header">
         <h1> Product Sub Category</h1>
         <div class="section-header-breadcrumb">
-            <div class="breadcrumb-item"><a href="{{ route('admin.slider.index') }}">Dashboard</a></div>
+            <div class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></div>
             <div class="breadcrumb-item">Product Sub Category</div>
         </div>
         

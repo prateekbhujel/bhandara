@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Backend;
 
 use App\DataTables\ChildCategoryDataTable;
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\ChildCategory;
+use App\Models\SubCategory;
 use Illuminate\Http\Request;
 
 class ChildCategoryController extends Controller
@@ -14,7 +16,7 @@ class ChildCategoryController extends Controller
      */
     public function index(ChildCategoryDataTable $dataTable)
     {
-        return $dataTable->render('admin.child-category.create');
+        return $dataTable->render('admin.child-category.index');
     }//End Method
 
     /**
@@ -55,12 +57,25 @@ class ChildCategoryController extends Controller
         // Return error response for invalid status value
         return response()->json(['status' => 'error', 'message' => 'Invalid status value.'], 400);
     }//End Method
+
+    /** 
+     * Get Sub categories realted to the id passed from the view.
+    **/
+    public function getSubCategories(Request $request)
+    {
+        return SubCategory::where('category_id', $request->id)
+                                    ->where('status', 1)
+                                    ->get();
+    }
+
     /**
      * Show the form for creating a new child category.
      */
     public function create()
     {
-        return view('admin.child-category.create');
+        $categories = Category::where('status', 1)->get();
+
+        return view('admin.child-category.create', compact('categories'));
     }//End Method
 
     /**
