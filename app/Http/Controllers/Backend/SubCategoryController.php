@@ -35,10 +35,10 @@ class SubCategoryController extends Controller
     public function store(Request $request)
     {
        $valiatedData = $request->validate([
-                        'category_id' => 'required',
-                        'name'        => 'required|max:200|unique:sub_categories,name',
-                        'status'      => 'required' 
-                    ]);
+            'category_id' => ['required'],
+            'name'        => ['required', 'max:200', 'unique:sub_categories,name'],
+            'status'      => ['required'] 
+        ]);
         $valiatedData['slug'] = Str::slug($request->name);
         SubCategory::create($valiatedData);
         
@@ -61,9 +61,9 @@ class SubCategoryController extends Controller
     public function update(Request $request,SubCategory $subCategory)
     {
         $valiatedData = $request->validate([
-            'category_id' => 'required',
-            'name'        => 'required|max:200|unique:sub_categories,name,' . $subCategory->id,
-            'status'      => 'required' 
+            'category_id' => ['required'],
+            'name'        => ['required', 'max:200', 'unique:sub_categories,name,' . $subCategory->id],
+            'status'      => ['required'] 
         ]);
         $valiatedData['slug'] = Str::slug($request->name);
         $subCategory->update($valiatedData);

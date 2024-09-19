@@ -93,9 +93,10 @@ class ChildCategoryDataTable extends DataTable
                         ->width(100)
                         ->addClass('text-center'),
                 Column::make('name'),
-                // Column::make('slug'),
-                // Column::make('category'),
-                // Column::make('status')->width(200),
+                Column::make('slug'),
+                Column::make('category_id'),
+                Column::make('sub_category_id'),
+                Column::make('status')->width(200),
                 Column::computed('action')
                         ->exportable(false)
                         ->printable(false)

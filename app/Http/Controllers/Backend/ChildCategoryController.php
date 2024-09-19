@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\ChildCategory;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
+use Str;
 
 class ChildCategoryController extends Controller
 {
@@ -64,9 +65,9 @@ class ChildCategoryController extends Controller
     public function getSubCategories(Request $request)
     {
         return SubCategory::where('category_id', $request->id)
-                                    ->where('status', 1)
-                                    ->get();
-    }
+                        ->where('status', 1)
+                        ->get();
+    }//End Method
 
     /**
      * Show the form for creating a new child category.
@@ -83,7 +84,17 @@ class ChildCategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'category_id'        => ['required'],
+            'sub_category_id'    => ['required'],
+            'name'               => ['required', 'max:200', 'unique:child_categories,name'],
+            'status'             => ['required'] 
+        ]);
+        $validatedData['slug'] = Str::slug($request->name);
+        ChildCategory::create($validatedData);
+
+        toastr('Data Created Successfully!', 'success');
+        return redirect()->route('admin.child-category.index');
     }//End Method
 
     /**

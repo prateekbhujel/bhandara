@@ -30,7 +30,7 @@
                                     <span class="text-danger">*</span>
                                 </label>
                                 <select name="category_id" class="form-control main-category" id="category_id">
-                                    <option> --- Select Category --- </option>
+                                    <option readonly disabled selected> --- Select Category --- </option>
                                     @foreach ($categories as $category)
                                         <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? "selected" : "" }}>{{ $category->name }}</option>
                                     @endforeach
@@ -38,11 +38,11 @@
                             </div>                            
                             
                             <div class="form-group">
-                                <label for="">Sub Category
+                                <label for="sub_category_id">Sub Category
                                     <span class="text-danger">*</span>
                                 </label>
-                                <select name="" class="form-control sub-category" id="">
-                                    <option> --- Select Sub Category --- </option>
+                                <select name="sub_category_id" class="form-control sub-category" id="sub_category_id">
+                                    <option readonly disabled selected> --- Select Sub Category --- </option>
                                 </select>
                             </div>
 
@@ -86,7 +86,7 @@
                     },
                     success: function (data) {
                         console.log(data);
-                        $('.sub-category').html(`<option> --- Select Sub Category --- </option>`);
+                        $('.sub-category').html(`<option readonly disabled selected> --- Select Sub Category --- </option>`);
                         
                         $.each(data, function(i, item){
                             $('.sub-category').append(`<option value="${item.id}">${item.name}</option>`);  
