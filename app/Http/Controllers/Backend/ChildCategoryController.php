@@ -12,6 +12,7 @@ use Str;
 
 class ChildCategoryController extends Controller
 {
+    
     /**
      * Display a listing of the child category.
      */
@@ -74,7 +75,11 @@ class ChildCategoryController extends Controller
      */
     public function create()
     {
-        $categories = Category::where('status', 1)->get();
+        $categories     = Category::where('status', 1)
+                                    ->whereHas('subCategories', function ($query) {
+                                        $query->where('status', 1);
+                                    })
+                                    ->get();
 
         return view('admin.child-category.create', compact('categories'));
     }//End Method
@@ -102,7 +107,14 @@ class ChildCategoryController extends Controller
      */
     public function edit(ChildCategory $childCategory)
     {
-        return view('admin.child-category.edit', compact('childCategory'));
+        $subCategories  = SubCategory::where('category_id', $childCategory->category_id)->where('status', 1)->get();
+        $categories     = Category::where('status', 1)
+                                    ->whereHas('subCategories', function ($query) {
+                                        $query->where('status', 1);
+                                    })
+                                    ->get();
+
+        return view('admin.child-category.edit', compact('childCategory', 'categories', 'subCategories'));
     }//End Method
 
     /**
@@ -110,7 +122,17 @@ class ChildCategoryController extends Controller
      */
     public function update(Request $request, ChildCategory $childCategory)
     {
-        //
+        $validatedData = $request->validate([
+            'category_id'        => ['required'],
+            'sub_category_id'    => ['required'],
+            'name'               => ['required', 'max:200', 'unique:child_categories,name,'. $childCategory->id],
+            'status'             => ['required'] 
+        ]);
+        $validatedData['slug'] = Str::slug($request->name);
+        $childCategory->update($validatedData);
+
+        toastr('Data Updated Successfully!', 'success');
+        return redirect()->route('admin.child-category.index');
     }//End Method
 
     /**
@@ -120,6 +142,6 @@ class ChildCategoryController extends Controller
     {
         $childCategory->delete();
 
-        return response(['status' => 'success', 'message' => 'Data Delete Successfully!']);
+        return response(['status' => 'success', 'message' => 'Data Deleted Successfully!']);
     }//End Method
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\DataTables\CategoryDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Str;
@@ -116,8 +117,17 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
+        $subCategoryCount = SubCategory::where('category_id', $category->id)->count();
+        if($subCategoryCount > 0) 
+        {    
+            return response([
+                'status' => 'error', 
+                'message' => 'Action failed. This item is currently in use by dependent items.'
+            ]);
+        }
+
         $category->delete();
 
-        return response(['status' => 'success', 'message' => 'Data Delete Successfully!']);
+        return response(['status' => 'success', 'message' => 'Data Deleted Successfully!']);
     }//End Method
 }

@@ -5,12 +5,11 @@
 @section('content')
 <section class="section">
     <div class="section-header">
-        <h1>Edit Child Category</h1>
+        <h1>Edit Product Child Category</h1>
         <div class="section-header-breadcrumb">
             <div class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></div>
             <div class="breadcrumb-item"><a href="{{ route('admin.child-category.index') }}">Product Child Category</a></div>
-            <div class="breadcrumb-item">Edit Product Child Category
-            </div>
+            <div class="breadcrumb-item"> edit Product Child Category</div>
         </div>
         
     </div>
@@ -24,39 +23,35 @@
                     </div>
                     <div class="card-body">
                         <form method="POST" action="{{ route('admin.child-category.update', $childCategory->id) }}">
-                            @method('PUT')
                             @csrf
-                            
+                            @method('PUT')
+
                             <div class="form-group">
                                 <label for="category_id">Category
                                     <span class="text-danger">*</span>
                                 </label>
-                                <select name="category_id" class="form-control" id="category_id">
-                                    <option> --- Select Category --- </option>
-                                    {{-- @foreach ($categories as $category)
-                                        <option value="{{ $category->id }}" {{ old('category_id', $subCategory->category_id) == $category->id ? 'selected' : '' }}>
-                                            {{ $category->name }}
-                                        </option>
-                                    @endforeach --}}
+                                <select name="category_id" class="form-control main-category" id="category_id">
+                                    <option readonly disabled selected> --- Select Category --- </option>
+                                    @foreach ($categories as $category)
+                                        <option value="{{ $category->id }}" {{ old('category_id', $childCategory->category_id) == $category->id ? "selected" : "" }}>{{ $category->name }}</option>
+                                    @endforeach
                                 </select>
                             </div>                            
                             
                             <div class="form-group">
-                                <label for="">Sub Category
+                                <label for="sub_category_id">Sub Category
                                     <span class="text-danger">*</span>
                                 </label>
-                                <select name="" class="form-control" id="">
-                                    <option> --- Select Category --- </option>
-                                    {{-- @foreach ($categories as $category)
-                                        <option value="{{ $category->id }}" {{ old('category_id', $subCategory->category_id) == $category->id ? 'selected' : '' }}>
-                                            {{ $category->name }}
-                                        </option>
-                                    @endforeach --}}
+                                <select name="sub_category_id" class="form-control sub-category" id="sub_category_id">
+                                    <option readonly disabled selected> --- Select Sub Category --- </option>
+                                    @foreach ($subCategories as $subCategory)
+                                        <option value="{{ $subCategory->id }}" {{ old('sub_category_id', $childCategory->sub_category_id) == $subCategory->id ? "selected" : "" }}>{{ $subCategory->name }}</option>
+                                    @endforeach
                                 </select>
                             </div>
 
                             <div class="form-group">
-                                <label for="name">Sub Category Name
+                                <label for="name">Name
                                     <span class="text-danger">*</span>
                                 </label>
                                 <input type="text" name="name" value="{{ old('name', $childCategory->name) }}" class="form-control" id="name" placeholder="Eg: DSLR, Blue T-shirt, Fair and Lovely." />
@@ -81,3 +76,31 @@
     </div>
 </section>
 @endsection
+
+@push('scripts')
+    <script>
+        $(document).ready( function () {
+            $('body').on('change', '.main-category', function () {
+               let id = $(this).val();
+               $.ajax({
+                    method: 'GET',
+                    url: "{{ route('admin.get-sub-categories') }}",
+                    data: {
+                        id: id
+                    },
+                    success: function (data) {
+                        console.log(data);
+                        $('.sub-category').html(`<option readonly disabled selected> --- Select Sub Category --- </option>`);
+                        
+                        $.each(data, function(i, item){
+                            $('.sub-category').append(`<option value="${item.id}">${item.name}</option>`);  
+                        })
+                    },
+                    error: function(xhr, status, error) {
+                        console.log(error);
+                    }
+               });
+            }); 
+        });
+    </script>
+@endpush

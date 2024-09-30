@@ -47,6 +47,12 @@ class ChildCategoryDataTable extends DataTable
             return $statusBtn;
         })
         ->rawColumns(['action', 'status'])
+        ->addColumn('category', function($query) {
+            return $query->category->name;
+        })
+        ->addColumn('sub_category', function ($query) {
+            return $query->subCategory->name;
+        })
         ->setRowId('id');
     }
 
@@ -94,8 +100,8 @@ class ChildCategoryDataTable extends DataTable
                         ->addClass('text-center'),
                 Column::make('name'),
                 Column::make('slug'),
-                Column::make('category_id'),
-                Column::make('sub_category_id'),
+                Column::make('category'),
+                Column::make('sub_category'),
                 Column::make('status')->width(200),
                 Column::computed('action')
                         ->exportable(false)
