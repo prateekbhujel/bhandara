@@ -17,7 +17,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4> Product Sub Category Data</h4>
+                        <h4> Product Sub Categories Data</h4>
                         <div class="card-header-action">
                             <a href="{{ route('admin.sub-category.create') }}" class="btn btn-dark">Add New Sub Category<a/>
                         </div>

@@ -17,7 +17,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Slider Data</h4>
+                        <h4>Sliders Data</h4>
                         <div class="card-header-action">
                             <a href="{{ route('admin.slider.create') }}" class="btn btn-dark">Create New Slider<a/>
                         </div>

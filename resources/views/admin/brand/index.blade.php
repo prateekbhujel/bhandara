@@ -1,14 +1,14 @@
 @extends('admin.layouts.master')
 
-@section('title')Product Category @endsection
+@section('title')Product Brand @endsection
 
 @section('content')
 <section class="section">
     <div class="section-header">
-        <h1>Category</h1>
+        <h1>Brand</h1>
         <div class="section-header-breadcrumb">
             <div class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></div>
-            <div class="breadcrumb-item">Product Category</div>
+            <div class="breadcrumb-item">Product Brand</div>
         </div>
         
     </div>
@@ -17,9 +17,9 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Categories Data</h4>
+                        <h4>Brands Data</h4>
                         <div class="card-header-action">
-                            <a href="{{ route('admin.category.create') }}" class="btn btn-dark">Create New Category<a/>
+                            <a href="{{ route('admin.brand.create') }}" class="btn btn-dark">Create New Brand<a/>
                         </div>
                     </div>
                     <div class="card-body p-2">
@@ -43,7 +43,7 @@
                 let checkbox = $(this);
 
                 $.ajax({
-                    url: "{{ route('admin.category.change-status') }}",
+                    url: "{{ route('admin.brand.change-status') }}",
                     method: 'PUT',
                     data: {
                         status: isChecked,
