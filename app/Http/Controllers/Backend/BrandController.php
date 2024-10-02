@@ -5,10 +5,14 @@ namespace App\Http\Controllers\Backend;
 use App\DataTables\BrandDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
+use App\Traits\ImageUploadTrait;
 use Illuminate\Http\Request;
+use Str;
 
 class BrandController extends Controller
 {
+    use ImageUploadTrait;
+
     /**
      * Display a listing of the with datables for brand.
      */
@@ -30,7 +34,19 @@ class BrandController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'logo'          =>  ['required', 'image', 'max:2048'],
+            'name'          =>  ['required', 'max:200'],
+            'is_featured'   =>  ['required', 'in:1,0'],
+            'status'        =>  ['required', 'in:1,0']
+        ]);
+        $logoPath           = $this->uploadImage($request, 'logo', 'uploads/logos');
+        $validated['logo']  = $logoPath; 
+        $validated['slug']  =  Str::slug($request->name);
+        Brand::create($validated);
+
+        toastr('Data Created Successfully!', 'success');
+        return redirect()->route('admin.brand.index');
     }//End Method
 
     /**
@@ -46,7 +62,21 @@ class BrandController extends Controller
      */
     public function update(Request $request, Brand $brand)
     {
-        //
+        $validated = $request->validate([
+            'logo'      =>  ['image', 'max:2048'],
+            'name'      =>  ['required', 'max:200'],
+            'is_featured'   =>  ['required', 'in:1,0'],
+            'status'    =>  ['required', 'in:1,0'],
+        ]);
+        /** Handling the Image Upload. **/
+        $logoPath = $this->updateImage($request, 'logo', 'uploads/logos', $brand->logo);
+
+        $validated['logo'] = empty(!$logoPath) ? $logoPath : $brand->logo;
+        $validated['slug']  =  Str::slug($request->name);
+        $brand->update($validated);
+
+        toastr('Data Updated Successfully!', 'success');
+        return redirect()->route('admin.brand.index');
     }//End Method
 
     /**
@@ -54,6 +84,8 @@ class BrandController extends Controller
      */
     public function destroy(Brand $brand)
     {
+        $this->deleteImage($brand->logo);
+        
         $brand->delete();
 
         return response(['status' => 'success', 'message' => 'Data Deleted Successfully!']);

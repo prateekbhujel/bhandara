@@ -45,7 +45,7 @@ class SliderController extends Controller
         ]);
 
         /** Handling the Image Upload. **/
-        $sliderImage = $this->uploadImage($request, 'banner', 'uploads/sliderImage');
+        $sliderImage = $this->uploadImage($request, 'banner', 'uploads/sliderImages');
         $validated['banner'] = $sliderImage;
 
         Slider::create($validated);
@@ -78,7 +78,7 @@ class SliderController extends Controller
         ]);
 
         /** Handling the Image Upload. **/
-        $sliderImage = $this->updateImage($request, 'banner', 'uploads/sliderImage', $slider->banner);
+        $sliderImage = $this->updateImage($request, 'banner', 'uploads/sliderImages', $slider->banner);
         $validated['banner'] = empty(!$sliderImage) ? $sliderImage : $slider->banner;
 
         $slider->update($validated);

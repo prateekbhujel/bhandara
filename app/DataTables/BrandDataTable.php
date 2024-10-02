@@ -29,6 +29,13 @@ class BrandDataTable extends DataTable
             
             return $editBtn . $deletBtn;
         })
+        ->addColumn('logo', function($query) {
+            return "<img width='350px' src='". asset($query->logo) ."' />";
+        })
+        ->addColumn('featured', fn($query) => $query->is_featured == 1
+                ? '<span class="badge badge-info">Yes</span>'
+                : '<span class="badge badge-danger text-light">No</span>'
+        )
         ->addColumn('status', function($query) {
             if ($query->status == 1) {
                 $statusBtn = '<label class="custom-switch mt-2">
@@ -46,7 +53,7 @@ class BrandDataTable extends DataTable
             }
             return $statusBtn;
         })
-        ->rawColumns(['action', 'status'])
+        ->rawColumns(['action', 'logo', 'featured', 'status'])
         ->setRowId('id');
     }
 
@@ -86,15 +93,13 @@ class BrandDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::computed('action')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width(60)
-                  ->addClass('text-center'),
-            Column::make('id'),
-            Column::make('add your columns'),
-            Column::make('created_at'),
-            Column::make('updated_at'),
+            Column::computed('DT_RowIndex')->title('SN')->searchable(false)->orderable(false)->width(100)
+                ->addClass('text-center'),
+            Column::make('logo')->searchable(false)->orderable(false)->width(300),
+            Column::make('name'),
+            Column::make('featured'),
+            Column::make('status')->width(200),
+            Column::computed('action')->width(200)->addClass('text-center'),
         ];
     }
 
