@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Backend\AdminController;
+use App\Http\Controllers\Backend\AdminVendorProfileController;
 use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ChildCategoryController;
@@ -37,3 +38,7 @@ Route::resource('child-category', ChildCategoryController::class)->except('show'
 /** Brand routes  */
 Route::put('child-category/change-status', [BrandController::class, 'changeStatus'])->name('brand.change-status');
 Route::resource('brand', BrandController::class)->except('show');
+
+/** Vendor Profile routes  */
+// Route::put('child-category/change-status', [BrandController::class, 'changeStatus'])->name('brand.change-status');
+Route::resource('vendor-profile', AdminVendorProfileController::class)->except('show');
