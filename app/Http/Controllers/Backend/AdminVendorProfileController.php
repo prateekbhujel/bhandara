@@ -48,7 +48,8 @@ class AdminVendorProfileController extends Controller
        ]);
        $vendor = Vendor::where('user_id', Auth::user()->id)->first();
        $bannerPath = $this->updateImage($request, 'banner', 'uploads/VendorImage', $vendor->banner);
-       $validated['banner'] = $bannerPath;
+       if ($request->hasFile('banner'))
+            $validated['banner'] = $bannerPath;
 
        $vendor->update($validated);
 
