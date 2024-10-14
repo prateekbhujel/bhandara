@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\DataTables\ProductDataTable;
 use App\Http\Controllers\Controller;
+use App\Models\Brand;
 use App\Models\Category;
 use App\Models\ChildCategory;
 use App\Models\Product;
@@ -26,9 +27,10 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $categories       = Category::all();
-
-        return view('admin.product.create', compact('categories'));
+        $categories = Category::all();
+        $brands     = Brand::all();
+        
+        return view('admin.product.create', compact('categories', 'brands'));
     }//End Method
 
     /**

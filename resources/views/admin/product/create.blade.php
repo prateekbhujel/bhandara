@@ -72,28 +72,124 @@
                                         </select>
                                     </div>
                                 </div>
+                                
+                            </div>
+
+                            <div class="form-group">
+                                <label for="brand_id">Brand</label>
+                                <span class="text-danger">*</span>
+                                <select id="brand_id" class="form-control brand" name="brand_id">
+                                    <option selected disabled>-- Select Brand --</option>
+                                    @foreach ($brands as $brand)
+                                        <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="sku">SKU</label>
+                                <input type="text" class="form-control" name="sku" value="{{ old('sku') }}" />
+                            </div>                            
+
+                            <div class="form-group">
+                                <label for="price">Price
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" name="price" value="{{ old('price') }}" class="form-control" id="price" placeholder="178" />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="offer_price">Offer Price</label>
+                                <input type="text" name="offer_price" value="{{ old('offer_price') }}" class="form-control" id="offer_price" placeholder="178" />
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="offer_start_date">Offer Start Date</label>
+                                        <input type="text" name="offer_start_date" class="form-control datepicker" />
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="offer_end_date">Offer End Date</label>
+                                        <input type="text" name="offer_end_date" class="form-control datepicker" />
+                                    </div>
+                                </div>
 
                             </div>
 
                             <div class="form-group">
-                                <label for="starting_price">Starting Price
-                                    <span class="text-danger">*</span>
-                                </label>
-                                <input type="text" name="starting_price" value="{{ old('starting_price') }}" class="form-control" id="starting_price" placeholder="178" />
+                                <label for="qty">Quantity</label>
+                                <input type="number" name="qty" class="form-control" value="{{ old('qty') }}" min="1" placeholder="12" />
                             </div>
 
                             <div class="form-group">
-                                <label for="btn_url">Video Url
-                                    <span class="text-danger">*</span>
-                                </label>
-                                <input type="text" name="video_link" value="{{ old('video_link') }}" class="form-control" id="btn_url" placeholder="https:://youtube.com/yourVideoLink" />
+                                <label for="video_link">Video Link</label>
+                                <input type="text" name="video_link" value="{{ old('video_link') }}" class="form-control" id="video_link" placeholder="https:://youtube.com/yourVideoLink" />
                             </div>
 
                             <div class="form-group">
-                                <label for="serial">Serial
+                                <label for="short_description">Short Description
                                     <span class="text-danger">*</span>
                                 </label>
-                                <input type="text" name="serial" value="{{ old('serial') }}" class="form-control" id="serial" placeholder="SN no. example: 1 or 2 or 3." />
+                               <textarea name="short_description" class="form-control">{{ old('short_description') }}</textarea>
+                            </div>                            
+                            
+                            <div class="form-group">
+                                <label for="long_description">Long Description
+                                    <span class="text-danger">*</span>
+                                </label>
+                               <textarea name="long_description" class="form-control summernote">{{ old('long_description') }}</textarea>
+                            </div>
+
+                            <div class="row">
+                                
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="is_top">Is Top</label>
+                                        <select name="is_top" class="form-control" id="is_top">
+                                            <option value="" disabled selected>-- Select --</option>
+                                            <option value="1" {{ old('is_top') == '1' ? "selected" : "" }}> Yes </option>
+                                            <option value="0" {{ old('is_top') == '0' ? "selected" : "" }}> No </option>
+                                        </select>
+                                    </div>                                  
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="is_best">Is Best</label>
+                                        <select name="is_best" class="form-control" id="is_best">
+                                            <option value="" disabled selected>-- Select --</option>
+                                            <option value="1" {{ old('is_best') == '1' ? "selected" : "" }}> Yes </option>
+                                            <option value="0" {{ old('is_best') == '0' ? "selected" : "" }}> No </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="is_featured">Is Featured</label>
+                                        <select name="is_featured" class="form-control" id="is_featured">
+                                            <option value="" disabled selected>-- Select --</option>
+                                            <option value="1" {{ old('is_featured') == '1' ? "selected" : "" }}> Yes </option>
+                                            <option value="0" {{ old('is_featured') == '0' ? "selected" : "" }}> No </option>
+                                        </select>
+                                    </div>  
+                                </div>
+
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="seo_title">Seo Title</label>
+                               <textarea name="seo_title" class="form-control">{{ old('seo_title') }}</textarea>
+                            </div>                            
+                            
+                            <div class="form-group">
+                                <label for="seo_description">Seo Description</label>
+                               <textarea name="seo_description" class="form-control">{{ old('seo_description') }}</textarea>
                             </div>
 
                             <div class="form-group">

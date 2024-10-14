@@ -22,6 +22,7 @@
   <link rel="stylesheet" href="{{ asset('datatables/jquery.dataTables.min.css') }}">
   <link rel="stylesheet" href="{{ asset('datatables/dataTables.bootstrap5.min.css') }}">
   <link rel="stylesheet" href="{{ asset('backend/assets/css/bootstrap-iconpicker.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('backend/assets/modules/bootstrap-daterangepicker/daterangepicker.css') }}">
 
   <!-- Template CSS -->
   <link rel="stylesheet" href="{{ asset('backend/assets/css/style.css') }}">
@@ -80,6 +81,7 @@
   <script src="{{ asset('datatables/dataTables.bootstrap5.min.js') }}"></script>
   <script src="{{ asset('backend/assets/js/sweetalert2@11.js') }}"></script>
   <script src="{{ asset('backend/assets/js/bootstrap-iconpicker.bundle.min.js') }}"></script>
+  <script src="{{ asset('backend/assets/modules/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
  
 
   <!-- Page Specific JS File -->
