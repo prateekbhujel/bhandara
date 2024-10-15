@@ -36,9 +36,7 @@ return new class extends Migration
             $table->double('offer_price')->nullable();
             $table->date('offer_start_date')->nullable();
             $table->date('offer_end_date')->nullable();
-            $table->boolean('is_top')->default(0);
-            $table->boolean('is_best')->default(0);
-            $table->boolean('is_featured')->default(0);
+            $table->string('product_type')->nullable();
             $table->boolean('status')->default(1);
             $table->integer('is_approved')->default(0);
             $table->string('seo_title')->nullable();

@@ -22,7 +22,68 @@ class ProductDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', 'product.action')
+            ->addColumn('action', function($query) {
+                $editBtn = "<a href='". route('admin.products.edit', $query->id) ."' class='btn btn-primary btn-sm'><i class='fa fa-edit'></i></a>";
+                $deletBtn = "<a href='". route('admin.products.destroy', $query->id) ."' class='btn btn-danger btn-sm ml-1 delete-item'><i class='fa fa-trash'></i></a>";
+                
+                $moreBtn = '<div class="dropdown dropleft d-inline">
+                                <button class="btn btn-dark btn-sm ml-1 dropdown-toggle" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                   <i class="fa fa-cog"></i>
+                                </butttton>
+                                <div class="dropdown-menu" x-placement="bottom-start" style="position: absoulte; transform: translate(0px, 28px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                    <a class="dropdown-item has-icon" href="#"><i class="far fa-heart"></i> Action</a>
+                                    <a class="dropdown-item has-icon" href="#"><i class="far fa-file"></i> Action another</a>
+                                    <a class="dropdown-item has-icon" href="#"><i class="far fa-clock"></i> Something Else</a>
+                                </div>
+                            </div>';
+
+                return $editBtn . $deletBtn . $moreBtn;
+            })
+            ->addColumn('image', function ($query) {
+                return  "<img width='70px;' src='".asset($query->thumb_image)."'></img>";
+            })
+            ->addColumn('type', function ($query) {
+                switch ($query->product_type) {
+
+                    case 'new_arrival':
+                        return '<i class="badge badge-success text-dark">New Arrival</i>';
+                        break;                    
+
+                        case 'featured_product':
+                            return '<i class="badge badge-warning text-dark">Featured Product</i>';
+                            break;  
+
+                        case 'top_product':
+                            return '<i class="badge badge-primary">Top Product</i>';
+                            break;                        
+                            
+                        case 'best_product':
+                            return '<i class="badge badge-danger">Best Product</i>';
+                            break;
+                    
+                    default:
+                       return '<i class="badge badge-dark">None</i>';
+                        break;
+                }
+            })
+            ->addColumn('status', function($query) {
+                if ($query->status == 1) {
+                    $statusBtn = '<label class="custom-switch mt-2">
+                                    <input type="checkbox" checked name="custom-switch-checkbox" data-id="'. $query->id .'" class="custom-switch-input change-status" />
+                                    <span class="custom-switch-indicator mr-1"></span> <span class="badge badge-success">Active</span> 
+                                  </label>
+                    ';
+                }else { 
+                    $statusBtn = '<label class="custom-switch mt-2">
+                                    <input type="checkbox" name="custom-switch-checkbox" data-id="'. $query->id .'" class="custom-switch-input change-status" />
+                                   <span class="custom-switch-indicator mr-1"></span>
+                                   <span class="badge badge-danger">InActive</span>
+                                  </label>
+                    ';
+                }
+                return $statusBtn;
+            })
+            ->rawColumns(['image', 'type', 'status', 'action'])
             ->setRowId('id');
     }
 
@@ -62,15 +123,17 @@ class ProductDataTable extends DataTable
     public function getColumns(): array
     {
         return [
+            Column::make('id'),
+            Column::make('image'),
+            Column::make('name'),
+            Column::make('price'),
+            Column::make('type')->width(150),
+            Column::make('status'),
             Column::computed('action')
                   ->exportable(false)
                   ->printable(false)
-                  ->width(60)
+                  ->width(200)
                   ->addClass('text-center'),
-            Column::make('id'),
-            Column::make('add your columns'),
-            Column::make('created_at'),
-            Column::make('updated_at'),
         ];
     }
 

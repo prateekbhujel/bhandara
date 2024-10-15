@@ -60,9 +60,7 @@ class ProductController extends Controller
             'video_link'        => ['url', 'nullable'],
             'short_description' => ['required', 'min:5', 'max:600'],
             'long_description'  => ['required', 'min:15'],
-            'is_top'            => ['required'],
-            'is_best'           => ['required'],
-            'is_featured'       => ['required'],
+            'product_type'      => ['nullable', 'in:--Select Product Type--, new_arrival,featured_product,top_product,best_product'],
             'seo_title'         => ['nullable', 'max:200'],
             'seo_description'   => ['nullable', 'max:400'],
             'status'            => ['required', 'in:1,0']

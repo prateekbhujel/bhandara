@@ -59,7 +59,7 @@
                                     <div class="form-group">
                                         <label for="sub_category_id">Sub Category</label>
                                         <select name="sub_category_id" class="form-control sub-category" id="sub_category_id">
-                                            <option>-- Select Sub Category --</option>
+                                            <option disabled selected>-- Select Sub Category --</option>
                                         </select>
                                     </div>
                                 </div>
@@ -68,7 +68,7 @@
                                     <div class="form-group">
                                         <label for="child_category_id">Child Category</label>
                                         <select name="child_category_id" class="form-control child-category" id="child_category_id">
-                                            <option>-- Select Child Category --</option>
+                                            <option disabled selected>-- Select Child Category --</option>
                                         </select>
                                     </div>
                                 </div>
@@ -144,40 +144,17 @@
                                 </label>
                                <textarea name="long_description" class="form-control summernote">{{ old('long_description') }}</textarea>
                             </div>
-
-                            <div class="row">
                                 
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="is_top">Is Top</label>
-                                        <select name="is_top" class="form-control" id="is_top">
-                                            <option value="0" {{ old('is_top') == '0' ? "selected" : "" }}> No </option>
-                                            <option value="1" {{ old('is_top') == '1' ? "selected" : "" }}> Yes </option>
-                                        </select>
-                                    </div>                                  
-                                </div>
-
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="is_best">Is Best</label>
-                                        <select name="is_best" class="form-control" id="is_best">
-                                            <option value="0" {{ old('is_best') == '0' ? "selected" : "" }}> No </option>
-                                            <option value="1" {{ old('is_best') == '1' ? "selected" : "" }}> Yes </option>
-                                        </select>
-                                    </div>
-                                </div>
-                                
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="is_featured">Is Featured</label>
-                                        <select name="is_featured" class="form-control" id="is_featured">
-                                            <option value="0" {{ old('is_featured') == '0' ? "selected" : "" }}> No </option>
-                                            <option value="1" {{ old('is_featured') == '1' ? "selected" : "" }}> Yes </option>
-                                        </select>
-                                    </div>  
-                                </div>
-
-                            </div>
+                            <div class="form-group">
+                                <label for="product_type">Product Type</label>
+                                <select name="product_type" class="form-control" id="product_type">
+                                    <option disabled selected>--Select Product Type--</option>
+                                    <option value="new_arrival">New Arrival</option>
+                                    <option value="featured_product">Featured</option>
+                                    <option value="top_product">Top Product</option>
+                                    <option value="best_product">Best Product</option>
+                                </select>
+                            </div>                                  
                             
                             <div class="form-group">
                                 <label for="seo_title">Seo Title</label>
