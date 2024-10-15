@@ -151,9 +151,8 @@
                                     <div class="form-group">
                                         <label for="is_top">Is Top</label>
                                         <select name="is_top" class="form-control" id="is_top">
-                                            <option value="" disabled selected>-- Select --</option>
-                                            <option value="1" {{ old('is_top') == '1' ? "selected" : "" }}> Yes </option>
                                             <option value="0" {{ old('is_top') == '0' ? "selected" : "" }}> No </option>
+                                            <option value="1" {{ old('is_top') == '1' ? "selected" : "" }}> Yes </option>
                                         </select>
                                     </div>                                  
                                 </div>
@@ -162,9 +161,8 @@
                                     <div class="form-group">
                                         <label for="is_best">Is Best</label>
                                         <select name="is_best" class="form-control" id="is_best">
-                                            <option value="" disabled selected>-- Select --</option>
-                                            <option value="1" {{ old('is_best') == '1' ? "selected" : "" }}> Yes </option>
                                             <option value="0" {{ old('is_best') == '0' ? "selected" : "" }}> No </option>
+                                            <option value="1" {{ old('is_best') == '1' ? "selected" : "" }}> Yes </option>
                                         </select>
                                     </div>
                                 </div>
@@ -173,9 +171,8 @@
                                     <div class="form-group">
                                         <label for="is_featured">Is Featured</label>
                                         <select name="is_featured" class="form-control" id="is_featured">
-                                            <option value="" disabled selected>-- Select --</option>
-                                            <option value="1" {{ old('is_featured') == '1' ? "selected" : "" }}> Yes </option>
                                             <option value="0" {{ old('is_featured') == '0' ? "selected" : "" }}> No </option>
+                                            <option value="1" {{ old('is_featured') == '1' ? "selected" : "" }}> Yes </option>
                                         </select>
                                     </div>  
                                 </div>
