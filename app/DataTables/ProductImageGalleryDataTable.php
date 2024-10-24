@@ -22,7 +22,17 @@ class ProductImageGalleryDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', 'productimagegallery.action')
+            ->addColumn('action', function($query) {
+                $editBtn = "<a href='". route('admin.image-gallery.edit', $query->id) ."' class='btn btn-primary btn-sm'><i class='fa fa-edit'></i></a>";
+
+                $deletBtn = "<a href='". route('admin.image-gallery.destroy', $query->id) ."' class='btn btn-danger btn-sm ml-1 delete-item'><i class='fa fa-trash'></i></a>";
+
+                return $editBtn . $deletBtn;
+            })
+            ->addColumn('image', function ($query) {
+                return  "<img width='70px;' src='".asset($query->image)."'></img>";
+            })
+            ->rawColumns(['image', 'action'])
             ->setRowId('id');
     }
 
@@ -62,15 +72,11 @@ class ProductImageGalleryDataTable extends DataTable
     public function getColumns(): array
     {
         return [
+            Column::make('id'),
+            Column::make('image'),
             Column::computed('action')
-                  ->exportable(false)
-                  ->printable(false)
                   ->width(60)
                   ->addClass('text-center'),
-            Column::make('id'),
-            Column::make('add your columns'),
-            Column::make('created_at'),
-            Column::make('updated_at'),
         ];
     }
 

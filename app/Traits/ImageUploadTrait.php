@@ -8,6 +8,7 @@ use File;
 
 trait ImageUploadTrait
 {
+
     /**
      * Handle image upload and return the path to store in the database.
      *
@@ -55,6 +56,27 @@ trait ImageUploadTrait
         }
         return null;
     }//End Method
+
+    public function uploadMultiImage(Request $request, string $inputName, string $path): string|array
+    {
+        $imagePaths = [];
+
+        if ($request->hasFile($inputName)) {
+            $images = $request->file($inputName);
+            foreach ($images as $image) {
+                $imageName = 'media_' . Str::random(40) . '.' . $image->getClientOriginalExtension();
+                $image->move(public_path($path), $imageName);
+
+                $imagePaths[] = $path . '/' . $imageName;
+            }
+
+            return $imagePaths;
+
+        }
+
+        throw new \Exception('No Image file provided or Image file upload error.');
+
+    }
 
     /**
      * Delete the specified image from storage.

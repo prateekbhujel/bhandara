@@ -32,7 +32,7 @@ class ProductDataTable extends DataTable
                                    <i class="fa fa-cog"></i>
                                 </button>
                                 <div class="dropdown-menu" x-placement="bottom-start" style="position: absoulte; transform: translate(0px, 28px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                    <a class="dropdown-item has-icon" href="'. route('admin.image-gallery.index') .'"><i class="far fa-heart"></i>Image gallery</a>
+                                    <a class="dropdown-item has-icon" href="'. route('admin.image-gallery.index', ['product' => $query->id]) .'"><i class="far fa-heart"></i>Image gallery</a>
                                     <a class="dropdown-item has-icon" href="#"><i class="far fa-file"></i> Action another</a>
                                     <a class="dropdown-item has-icon" href="#"><i class="far fa-clock"></i> Something Else</a>
                                 </div>
