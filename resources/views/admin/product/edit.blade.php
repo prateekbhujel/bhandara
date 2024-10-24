@@ -24,7 +24,7 @@
                     <div class="card-body">
                         <form method="POST" action="{{ route('admin.products.update', $product->id) }}" enctype="multipart/form-data">
                             @csrf
-                            @method('PATCH')
+                            @method('PUT')
 
                             <div class="form-group">
                                 <label>Current Product Image</label>
@@ -163,8 +163,9 @@
                                 
                             <div class="form-group">
                                 <label for="product_type">Product Type</label>
+                                <em class="text-muted text-xs">(Leave "Select Product Type" if you do not want to assign any type)</em>
                                 <select name="product_type" class="form-control" id="product_type">
-                                    <option disabled selected>--Select Product Type--</option>
+                                    <option selected>--Select Product Type--</option>
                                     <option value="new_arrival" @selected(old('product_type', $product->product_type ?? '') == 'new_arrival')>New Arrival</option>
                                     <option value="featured_product" @selected(old('product_type', $product->product_type ?? '') == 'featured_product')>Featured</option>
                                     <option value="top_product" @selected(old('product_type', $product->product_type ?? '') == 'top_product')>Top Product</option>

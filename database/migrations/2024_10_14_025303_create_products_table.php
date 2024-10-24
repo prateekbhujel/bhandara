@@ -24,8 +24,8 @@ return new class extends Migration
             $table->text('thumb_image');
             $table->foreignIdFor(Vendor::class);
             $table->foreignIdFor(Category::class);
-            $table->foreignIdFor(SubCategory::class)->default(0);
-            $table->foreignIdFor(ChildCategory::class)->default(0);
+            $table->foreignIdFor(SubCategory::class)->nullable();
+            $table->foreignIdFor(ChildCategory::class)->nullable();
             $table->foreignIdFor(Brand::class);
             $table->integer('qty');
             $table->text('short_description');

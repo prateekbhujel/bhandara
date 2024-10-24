@@ -60,7 +60,7 @@ class ProductController extends Controller
             'video_link'        => ['url', 'nullable'],
             'short_description' => ['required', 'min:5', 'max:600'],
             'long_description'  => ['required', 'min:15'],
-            'product_type'      => ['nullable', 'in:--Select Product Type--, new_arrival,featured_product,top_product,best_product'],
+            'product_type'      => ['nullable', 'in:new_arrival,featured_product,top_product,best_product'],
             'seo_title'         => ['nullable', 'max:200'],
             'seo_description'   => ['nullable', 'max:400'],
             'status'            => ['required', 'in:1,0']
@@ -85,7 +85,7 @@ class ProductController extends Controller
         
         Product::create($validated);
 
-        toastr('Data Updated Successfully!', 'success');
+        toastr('Data Created Successfully!', 'success');
         return redirect()->route('admin.products.index');
     }//End Method
 
@@ -107,7 +107,51 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        //
+        $validated = $request->validate([
+            'thumb_image'       => ['nullable', 'image', 'max:3048'],
+            'name'              => ['required', 'string', 'max:200'],
+            'sku'               => ['nullable'],
+            'category_id'       => ['required'],
+            'sub_category_id'   => ['nullable'],
+            'child_category_id' => ['nullable'],
+            'category_id'       => ['required'],
+            'brand_id'          => ['required', 'exists:brands,id'],
+            'price'             => ['required', 'numeric', 'regex:/^\d+(\.\d{1,2})?$/'],
+            'offer_price'       => ['nullable', 'numeric', 'regex:/^\d+(\.\d{1,2})?$/'], 
+            'offer_start_date'  => ['nullable'],
+            'offer_end_date'    => ['nullable'],
+            'qty'               => ['required', 'integer'],
+            'video_link'        => ['url', 'nullable'],
+            'short_description' => ['required', 'min:5', 'max:600'],
+            'long_description'  => ['required', 'min:15'],
+            'product_type'      => ['nullable', 'in:new_arrival,featured_product,top_product,best_product'],
+            'seo_title'         => ['nullable', 'max:200'],
+            'seo_description'   => ['nullable', 'max:400'],
+            'status'            => ['required', 'in:1,0']
+        ], [
+            'category_id.required'  => 'The Category field is required.',
+            'brand_id.required'     => 'The Brand field is required.',
+            'price.required'        => 'The Price field is required.',
+            'price.numeric'         => 'The Price must be a valid number.',
+            'price.regex'           => 'The Price must be a valid amount (e.g., 99, 0.99, 1.99).',            
+            'offer_price.numeric'   => 'The Offer Price must be a valid number.',
+            'offer_price.regex'     => 'The Offer Price must be a valid amount (e.g., 99, 0.99, 1.99).',
+            'offer_start_date.date' => 'The Offer Start Date must be a valid date.',
+            'offer_end_date.date'   => 'The Offer End Date must be a valid date.',
+        ]);
+        /** Handling image and storing image path into the database **/
+        $imagePath = $this->updateImage($request, 'thumb_image', 'uploads/productImages', $product->thumb_image);
+        /** Checking if the imagePath is avaibale if not passing old path of the image. **/
+        $validated['thumb_image'] = empty(!$imagePath) ? $imagePath : $product->thumb_image;
+        /** End Image Path Upload. **/
+        $validated['slug']        = Str::slug($request->name);
+        $validated['vendor_id']   = Auth::user()->vendor->id;
+        $validated['is_approved'] = 1;
+        
+        $product->update($validated);
+
+        toastr('Data Updated Successfully!', 'success');
+        return redirect()->route('admin.products.index');
     }//End Method
 
     /**

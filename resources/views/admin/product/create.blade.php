@@ -147,8 +147,9 @@
                                 
                             <div class="form-group">
                                 <label for="product_type">Product Type</label>
+                                <em class="text-muted text-xs">(Leave "Select Product Type" if you do not want to assign any type)</em>
                                 <select name="product_type" class="form-control" id="product_type">
-                                    <option disabled selected>--Select Product Type--</option>
+                                    <option selected>--Select Product Type--</option>
                                     <option value="new_arrival">New Arrival</option>
                                     <option value="featured_product">Featured</option>
                                     <option value="top_product">Top Product</option>
