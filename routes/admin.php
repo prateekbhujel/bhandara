@@ -37,7 +37,7 @@ Route::get('get-sub-categories', [ChildCategoryController::class, 'getSubCategor
 Route::resource('child-category', ChildCategoryController::class)->except('show');
 
 /** Brand routes  */
-Route::put('child-category/change-status', [BrandController::class, 'changeStatus'])->name('brand.change-status');
+Route::put('brand/change-status', [BrandController::class, 'changeStatus'])->name('brand.change-status');
 Route::resource('brand', BrandController::class)->except('show');
 
 /** Vendor Profile routes  */

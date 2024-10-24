@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 
-@section('title')Slider-Create @endsection
+@section('title')Product-Create @endsection
 
 @section('content')
 <section class="section">

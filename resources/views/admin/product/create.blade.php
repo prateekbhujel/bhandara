@@ -108,14 +108,14 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="offer_start_date">Offer Start Date</label>
-                                        <input type="text" name="offer_start_date" class="form-control datepicker" />
+                                        <input type="text" name="offer_start_date" value="{{ old('offer_start_date') }}" class="form-control datepicker" />
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="offer_end_date">Offer End Date</label>
-                                        <input type="text" name="offer_end_date" class="form-control datepicker" />
+                                        <input type="text" name="offer_end_date" value="{{ old('offer_end_date') }}" class="form-control datepicker" />
                                     </div>
                                 </div>
 

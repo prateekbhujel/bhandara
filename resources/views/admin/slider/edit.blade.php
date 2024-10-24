@@ -24,14 +24,13 @@
                     <div class="card-body">
                         <form method="POST" action="{{ route('admin.slider.update', $slider->id) }}" enctype="multipart/form-data">
                             @csrf
-                            @method('PUT')
+                            @method('PATCH')
 
                             <div class="form-group">
                                 <label>Current Slider</label>
                                 <br>
                                 <img width="450px;" src="{{ asset($slider->banner) }}" alt="slider-image" />
-                            </div>
-                            
+                            </div>                
 
                             <div class="form-group">
                                 <label for="banner">Slider Image

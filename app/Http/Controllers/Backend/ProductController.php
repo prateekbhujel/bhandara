@@ -94,7 +94,12 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        //
+        $categories         = Category::where('status', 1)->get();
+        $subCategories      = SubCategory::where('status', 1)->where('category_id', $product->category_id)->get();
+        $childCategories    = ChildCategory::where('status', 1)->where('sub_category_id', $product->sub_category_id)->get();
+        $brands             = Brand::where('status', 1)->get();
+
+        return view('admin.product.edit', compact('product', 'brands', 'categories', 'subCategories', 'childCategories'));
     }//End Method
 
     /**
@@ -118,17 +123,17 @@ class ProductController extends Controller
     */
     public function getSubCategories(Request $request)
     {
-        $subCategories = SubCategory::where('category_id', $request->id)->get();
+        $subCategories = SubCategory::where('status', 1)->where(['category_id' => $request->id])->get();
 
         return $subCategories;
     }//End Method
 
-        /** 
+    /** 
      * Gets all the Child Categories related to selected Sub Category.
     */
     public function getChildCategories(Request $request)
     {
-        $childCategories = ChildCategory::where('sub_category_id', $request->id)->get();
+        $childCategories = ChildCategory::where('status', 1)->where('sub_category_id', $request->id)->get();
         
         return $childCategories;
     }//End Method
