@@ -30,9 +30,9 @@ class ProductDataTable extends DataTable
                 $moreBtn = '<div class="dropdown dropleft d-inline">
                                 <button class="btn btn-dark btn-sm ml-1 dropdown-toggle" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                    <i class="fa fa-cog"></i>
-                                </butttton>
+                                </button>
                                 <div class="dropdown-menu" x-placement="bottom-start" style="position: absoulte; transform: translate(0px, 28px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                    <a class="dropdown-item has-icon" href="#"><i class="far fa-heart"></i> Action</a>
+                                    <a class="dropdown-item has-icon" href="'. route('admin.image-gallery.index') .'"><i class="far fa-heart"></i>Image gallery</a>
                                     <a class="dropdown-item has-icon" href="#"><i class="far fa-file"></i> Action another</a>
                                     <a class="dropdown-item has-icon" href="#"><i class="far fa-clock"></i> Something Else</a>
                                 </div>
